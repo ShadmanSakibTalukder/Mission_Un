@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('requested', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('requested_id');
-            $table->string('part_no');
+            $table->integer('part_no');
             $table->string('nomenclature');
             $table->integer('qty');
             $table->timestamps();

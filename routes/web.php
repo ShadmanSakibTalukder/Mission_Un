@@ -34,6 +34,7 @@ Route::prefix('admin')->middleware(['auth', 'isAdmin'])->group(function () {
     //requested list
     Route::get('requested',[App\Http\Controllers\Admin\RequestedController::class,'index']);
     Route::get('requested/create',[App\Http\Controllers\Admin\RequestedController::class,'create']);
+    Route::post('requested/create',[App\Http\Controllers\Admin\RequestedController::class,'store']);
 
     
 });
