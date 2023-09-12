@@ -30,5 +30,10 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 Route::prefix('admin')->middleware(['auth', 'isAdmin'])->group(function () {
     Route::get('/dashboard', [dashboardController::class, 'index'])->name('admin.dashboard');
 
+
+    //requested list
+    Route::get('requested',[App\Http\Controllers\Admin\RequestedController::class,'index']);
+    Route::get('requested/create',[App\Http\Controllers\Admin\RequestedController::class,'create']);
+
     
 });
