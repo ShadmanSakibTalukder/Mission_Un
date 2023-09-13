@@ -13,16 +13,16 @@
                         Dashboard
                     </a>
                 </li>
-                
 
+                <!--
                 <li class="nav-item">
                     <a class="nav-link d-flex align-items-center gap-2 active" aria-current="page" href="{{route('admin.dashboard')}}">
                         <i class="fa-solid fa-earth-asia fa-spin"></i>
                         Parts List
                     </a>
-                </li>
+                </li> -->
                 <li class="nav-item">
-                    <a class="nav-link d-flex align-items-center gap-2 active" aria-current="page" href="{{route('admin.dashboard')}}">
+                    <a class="nav-link d-flex align-items-center gap-2 active" aria-current="page" href="{{route('admin.requested')}}">
                         <i class="fa-solid fa-earth-asia fa-spin"></i>
                         Requested List
                     </a>

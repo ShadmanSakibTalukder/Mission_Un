@@ -1,6 +1,6 @@
 <x-master>
     <x-slot:title>
-     Requested Orders
+        Requested Orders
     </x-slot:title>
     @if (session()->has('message'))
     <div class="alert alert-warning alert-dismissible fade show" role="alert">
@@ -33,8 +33,8 @@
                     <thead>
                         <tr>
                             <th scope="col">No.</th>
-                            <th scope="col">Requested No.</th>
-                            <th scope="col">Total Item</th>
+                            <th scope="col">Requested by.</th>
+                            <th scope="col">Reqested Orders</th>
                             <th scope="col">Date</th>
                             <th scope="col">Status</th>
                             <th scope="col">Action</th>
