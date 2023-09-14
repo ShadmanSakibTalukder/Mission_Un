@@ -131,7 +131,15 @@
                                 <td>{{$item['requestedPartNo']}}</td>
                                 <td>{{$item['requestedNomenclature']}}</td>
                                 <td><input type="qty" class="form-control" id="qty" wire:model.defer="qty" name="qty"></td>
-                                
+
+                                <td>
+                                    <button type="button" wire:click="addToListDynamic({{$item['id']}})" class="btn btn1 rounded" title="{{__('Add To List')}}">
+                                        <span wire:loading.remove wire:target="addToListDynamic">
+                                            <i class="fa-solid fa-plus fa-bounce"></i>
+                                        </span>
+                                        <span wire:loading wire:target="addToListDynamic">{{__('Adding...')}}</span>
+                                    </button>
+                                </td>
                             </tr>
 
                             @empty

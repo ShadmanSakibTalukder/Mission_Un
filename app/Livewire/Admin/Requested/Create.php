@@ -45,6 +45,34 @@ class Create extends Component
         }
     }
 
+    public function addToListDynamic($partId)
+    {
+        $parts = $this->fetchData();
+        // $part = $parts->findOrFail($partId);
+        // dd($part);
+
+        $part = null;
+        foreach ($parts as $item) {
+            if ($item['id'] == $partId) {
+                $part = $item;
+                break;
+            }
+        }
+
+        if ($part) {
+            // dd($part['requestedPartNo']);
+            AddToList::create([
+                'part_no' => $part['requestedPartNo'],
+                'nomenclature' => $part['requestedNomenclature'],
+                'qty' => $this->qty,
+               
+            ]);
+            session()->flash('success_message', 'Product added to cart!');
+        } else {
+            dd("Part with ID {$partId} not found.");
+        }
+    }
+
     public function render()
     {
         $parts = $this->fetchData();
