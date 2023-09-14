@@ -9,13 +9,13 @@ return new class extends Migration
     /**
      * Run the migrations.
      */
-    public function up()
+    public function up(): void
     {
-        Schema::create('requested_orders', function (Blueprint $table) {
+        Schema::create('add_to_lists', function (Blueprint $table) {
             $table->id();
-            $table->string('request_order_no');
-            $table->string('requested_by');
-            $table->date('issue_date');
+            $table->string('part_no');
+            $table->string('nomenclature');
+            $table->integer('qty')->default('1');
             $table->timestamps();
         });
     }
@@ -25,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('requested_orders');
+        Schema::dropIfExists('add_to_lists');
     }
 };

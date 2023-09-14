@@ -19,17 +19,17 @@ class RequestedController extends Controller
         return view('admin.requested.create');
     }
 
-    public function store(RequestedFormRequest $request)
-    {
-        $validatedData= $request->validated();
-    $requested = new Requested;
-    $requested->requested_id= $validatedData['requested_id'];
-    $requested->part_no= $validatedData['part_no'];
-    $requested->nomenclature= $validatedData['nomenclature'];
-    $requested->qty= $validatedData['qty'];
-    $requested->status= $request->status==true ? '1':'0';
-    $requested->Save();
+    // public function store(RequestedFormRequest $request)
+    // {
+    //     $validatedData= $request->validated();
+    // $requested = new Requested;
+    // $requested->requested_id= $validatedData['requested_id'];
+    // $requested->part_no= $validatedData['part_no'];
+    // $requested->nomenclature= $validatedData['nomenclature'];
+    // $requested->qty= $validatedData['qty'];
+    // $requested->status= $request->status==true ? '1':'0';
+    // $requested->Save();
 
-    return redirect('admin/requested')->with('message','Requested Order Added Successfully');
-    }
+    // return redirect('admin/requested')->with('message','Requested Order Added Successfully');
+    // }
 }

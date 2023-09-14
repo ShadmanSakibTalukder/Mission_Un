@@ -1,7 +1,7 @@
 <x-slot:title>
     Create Requested Order
 </x-slot:title>
-@if (session()->has('message'))
+{{-- @if (session()->has('message'))
 <div class="alert alert-warning alert-dismissible fade show" role="alert">
     {{ session('message') }}
     <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
@@ -11,7 +11,7 @@
     {{ session('success_message') }}
     <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
 </div>
-@endif
+@endif --}}
 <div class="container-fluid">
     <div class="row">
         <div class="col-md-12">
@@ -27,18 +27,37 @@
                     <table class="table table-bordered">
                         <thead>
                             <tr>
+                                <th> SL</th>
                                 <th>Parts No.</th>
                                 <th>Nomenclature</th>
                                 <th>Qty</th>
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td>Parts No.</td>
-                                <td>Nomenclature</td>
-                                <td>Qty</td>
+                            @forelse ($added_to_list as $item)
 
+                            <tr>
+                                <td>{{$loop->iteration}}</td>
+                                <td>{{ $item->part_no }}</td>
+                                <td>{{ $item->nomenclature }}</td>
+                                <td>{{ $item->qty }}</td>
+
+                                {{-- <td>
+                                    <div class="remove">
+                                        <button type="button" wire:click="removeListItem({{ $item->id }})" wire:loading.attr="disabled" class="btn btn-danger btn-sm" title="{{__('Remove')}}">
+                                            <span wire:loading.remove wire:target="removeListItem({{ $item->id }})">
+                                                <i class="fa fa-trash"></i>
+                                            </span>
+                                            <span wire:loading wire:target="removeListItem({{ $item->id }})">{{__('Removing')}}</span>
+                                        </button>
+                                    </div>
+                                </td> --}}
                             </tr>
+                            @empty
+                            <tr>
+                                <td colspan="6">No items added yet.</td>
+                            </tr>
+                            @endforelse
 
                         </tbody>
                     </table>
@@ -47,11 +66,11 @@
                 <form>
                     <div class="mb-3">
                         <label for="requested_id" class="form-label">Requested Order:</label>
-                        <input type="unsignedBigInteger" class="form-control" id="requested_id" required>
+                        <input type="text" class="form-control" id="requested_id" required>
                     </div>
                     <div class="mb-3">
                         <label for="part_no" class="form-label">Requested By:</label>
-                        <input type="integer" class="form-control" id="part_no" required>
+                        <input type="integer" class="form-control" id="pa_no" required>
                     </div>
                     <div class="mb-3">
                         <label for="nomenclature" class="form-label">Issue Date:</label>
@@ -100,20 +119,19 @@
                                 <td>
                                     <input type="qty" class="form-control" id="qty" wire:model.defer="qty" name="qty">
                                 </td>
-                                <td>
-                                    <button type="button" class="btn btn1 rounded" title="{{__('Add To PO')}}">
+                                <td><button type="button" wire:click="addToListStatic()" wire:loading.attr="disabled" wire:target="addToListStatic({{ $part_no }})" class="btn btn1 rounded mb-5" title="{{__('Add To Quotation')}}">
+                                    <span wire:loading.remove wire:target="addToListStatic({{ $part_no }})">
                                         <i class="fa fa-plus fa-bounce"></i>
-                                    </button>
-                                </td>
+                                    </span>
+                                    <span wire:loading wire:target="addToListStatic({{ $part_no }})">{{__('Adding...')}}</span>
+                                </button></td>
                             </tr>
                             @forelse ($parts as $item)
                             <tr>
                                 <td>{{$item['requestedPartNo']}}</td>
                                 <td>{{$item['requestedNomenclature']}}</td>
                                 <td><input type="qty" class="form-control" id="qty" wire:model.defer="qty" name="qty"></td>
-                                <td><button type="button" class="btn btn1 rounded" title="{{__('Add To PO')}}">
-                                        <i class="fa fa-plus fa-bounce"></i>
-                                    </button></td>
+                                
                             </tr>
 
                             @empty
@@ -129,6 +147,8 @@
             </div>
         </div>
     </div>
+    @push('js')
+        
     <script>
         const searchInput = document.getElementById('search');
         const tableRows = document.querySelectorAll('#tableData tr');
@@ -146,4 +166,5 @@
             });
         });
     </script>
+    @endpush
 </div>
