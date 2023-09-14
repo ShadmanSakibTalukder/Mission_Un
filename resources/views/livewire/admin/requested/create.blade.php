@@ -63,27 +63,35 @@
                     </table>
                 </div>
 
-                <form>
+                <form wire:submit.prevent="quotationOrder">
+                    
                     <div class="mb-3">
-                        <label for="requested_id" class="form-label">Requested Order:</label>
-                        <input type="text" class="form-control" id="requested_id" required>
+                        <label for="requested_order_no" class="form-label">Requested Order No:</label>
+                        <input type="text" class="form-control" id="requested_order_no" wire:model.defer="requested_order_no" required>
                     </div>
                     <div class="mb-3">
-                        <label for="part_no" class="form-label">Requested By:</label>
-                        <input type="integer" class="form-control" id="pa_no" required>
+                        <label for="requested_by" class="form-label">Requested By:</label>
+                        <input type="text" class="form-control" id="requested_by" wire:model.defer="requested_by" required>
                     </div>
                     <div class="mb-3">
-                        <label for="nomenclature" class="form-label">Issue Date:</label>
-                        <input type="string" class="form-control" id="nomenclature" name="nomenclature" required>
+                        <label for="requested_date" class="form-label">Date</label>
+                        <input type="date" id="requested_date" name="requested_date" wire:model.defer="requested_date" class="form-control" required>
                     </div>
                     <!-- <div class="mb-3">
                             <label for="qty" class="form-label">Qty:</label>
                             <input type="integer" class="form-control" id="qty" name="qty" required>
                         </div> -->
-                    <div class="my-5 d-flex justify-content-end p-3">
+                    {{-- <div class="my-5 d-flex justify-content-end p-3">
                         <button type="submit" class="btn btn-md btn-outline-primary px-3 mx-2">
                             <span wire:loading.remove wire:target="codOrder">Save</span>
                             <span wire:loading wire:target="codOrder">Saving Requested Order</span>
+                        </button>
+                        <a href="#" class="btn btn-md btn-outline-secondary">Back</a>
+                    </div> --}}
+                    <div class="my-5 d-flex justify-content-end p-3">
+                        <button type="button" wire:click="quotationOrder()" wire:loading.attr="disabled" wire:target="quotationOrder" class="btn btn-md btn-outline-primary px-3 mx-2">
+                            <span wire:loading.remove wire:target="quotationOrder">Save</span>
+                            <span wire:loading wire:target="quotationOrder">Saving Requested Order</span>
                         </button>
                         <a href="#" class="btn btn-md btn-outline-secondary">Back</a>
                     </div>

@@ -2,14 +2,20 @@
 
 namespace App\Livewire\Admin\Requested;
 
+use no;
 use Livewire\Component;
 use App\Models\AddToList;
+use App\Models\Quotation;
+use Livewire\WithPagination;
+use App\Models\QuotationItems;
 use Illuminate\Support\Facades\Http;
 
 class Create extends Component
 {
 
-    public $part_no, $nomenclature, $qty;
+    use WithPagination;
+    
+    public $part_no, $nomenclature, $qty, $requested_order_no, $requested_by, $requested_date;
     public $added_to_list = [];
     public function fetchData()
     {
@@ -72,6 +78,37 @@ class Create extends Component
             dd("Part with ID {$partId} not found.");
         }
     }
+ 
+    
+    public function quotationOrder()
+{
+    $this->validate([
+        'requested_order_no' => 'required|string',
+        'requested_by' => 'required|string',
+        'requested_date' => 'required|date',
+    ]);
+
+    $added_to_list = AddToList::all();
+
+    $quotation = Quotation::create([
+        'requested_order_no' => $this->requested_order_no,
+        'requested_by' => $this->requested_by,
+        'requested_date' => $this->requested_date,
+    ]);
+
+    foreach ($added_to_list as $item) {
+        QuotationItems::create([
+            'quote_id' => $quotation->id,
+            'part_no' => $item->part_no,
+            'nomenclature' => $item->nomenclature,
+            'qty' => $item->qty,
+        ]);
+    }
+
+    AddToList::query()->forceDelete();
+    $this->reset(['requested_order_no', 'requested_by', 'requested_date']);
+    return true;
+}
 
     public function render()
     {

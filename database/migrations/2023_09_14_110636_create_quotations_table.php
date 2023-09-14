@@ -13,9 +13,9 @@ return new class extends Migration
     {
         Schema::create('quotations', function (Blueprint $table) {
             $table->id();
-            $table->string('order_no');
-            $table->string('order_by');
-            $table->string('issue_date');
+            $table->string('requested_order_no');
+            $table->string('requested_by');
+            $table->date('requested_date');
             $table->timestamps();
         });
     }
