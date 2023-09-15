@@ -41,8 +41,30 @@
                         </tr>
                     </thead>
                     <tbody>
-
+                        @forelse ($quotation  as $item)
+                        <tr>
+                            <td>{{ $loop->iteration }}</td>
+                            <td>{{ $item->requested_by }}</td>
+                            <td>{{ $item->requested_order_no }}</td>
+                            <td>{{ $item->requested_date }}</td>
+                            <td>{{ $item->status }}</td>
+                            <td>
+                                <a href="{{ url('admin/requested/' . $item->id) }}" class="btn btn-sm btn-primary">{{ __('View') }}</a>
+                                <a href="{{ url('admin/requested/' . $item->id . '/edit') }}" class="btn btn-sm btn-success">{{ __('Edit') }}</a>
+                                <form action="{{ url('admin/requested/' . $item->id) }}" method="POST" style="display: inline;">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Are you sure you want to delete this order?')">{{ __('Delete') }}</button>
+                                </form>
+                            </td>
+                        </tr>
+                        @empty
+                        <tr>
+                            <td colspan="6">{{ __('No requested orders available.') }}</td>
+                        </tr>
+                        @endforelse
                     </tbody>
+                    
                 </table>
             </div>
         </div>

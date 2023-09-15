@@ -98,7 +98,7 @@ class Create extends Component
 
     foreach ($added_to_list as $item) {
         QuotationItems::create([
-            'quote_id' => $quotation->id,
+            'quote_no' => $quotation->id,
             'part_no' => $item->part_no,
             'nomenclature' => $item->nomenclature,
             'qty' => $item->qty,
@@ -114,7 +114,9 @@ class Create extends Component
     {
         $parts = $this->fetchData();
         $this->added_to_list = AddToList::all();
-        return view('livewire.admin.requested.create', ['parts'=>$parts,'added_to_list'=> $this->added_to_list]);
+        $quotation=Quotation::all();
+        return view('livewire.admin.requested.create', ['parts'=>$parts,'added_to_list'=> $this->added_to_list, 'quotation'=>$quotation]);
+    
     }
 
 
