@@ -6,12 +6,16 @@ use App\Models\Requested;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\RequestedFormRequest;
+use App\Models\Quotation;
 
 class RequestedController extends Controller
 {
     public function index()
+
     {
-        return view ('admin.requested.index');
+        $quotation=Quotation::all();
+
+        return view (('admin.requested.index'), compact('quotation'));
     }
 
     public function create()

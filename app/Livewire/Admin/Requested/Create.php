@@ -114,8 +114,8 @@ class Create extends Component
     {
         $parts = $this->fetchData();
         $this->added_to_list = AddToList::all();
-        $quotation=Quotation::all();
-        return view('livewire.admin.requested.create', ['parts'=>$parts,'added_to_list'=> $this->added_to_list, 'quotation'=>$quotation]);
+        
+        return view('livewire.admin.requested.create', ['parts'=>$parts,'added_to_list'=> $this->added_to_list]);
     
     }
 

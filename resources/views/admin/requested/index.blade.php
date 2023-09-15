@@ -49,12 +49,11 @@
                             <td>{{ $item->requested_date }}</td>
                             <td>{{ $item->status }}</td>
                             <td>
-                                <a href="{{ url('admin/requested/' . $item->id) }}" class="btn btn-sm btn-primary">{{ __('View') }}</a>
-                                <a href="{{ url('admin/requested/' . $item->id . '/edit') }}" class="btn btn-sm btn-success">{{ __('Edit') }}</a>
+                                <a href="{{ url('admin/requested/' . $item->id . '/edit') }}" class="btn btn-sm link-warning"><i class="fa-solid fa-pen-to-square fa-lg"></i></a>
                                 <form action="{{ url('admin/requested/' . $item->id) }}" method="POST" style="display: inline;">
                                     @csrf
                                     @method('DELETE')
-                                    <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Are you sure you want to delete this order?')">{{ __('Delete') }}</button>
+                                    <button class="btn btn-sm link-danger" onclick="return confirm('Are you sure you want to delete?')"><i class="fa-solid fa-trash fs-5"></i></button>
                                 </form>
                             </td>
                         </tr>
