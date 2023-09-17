@@ -23,9 +23,11 @@ class RequestedController extends Controller
         return view('admin.requested.create');
     }
 
-    public function show(Quotation $quotation)
+    public function show($id)
     {
-        dd($quotation->quotationItems);
+        $quotation = Quotation::findOrFail($id)->first();
+
+        // dd($quotation->quotationItems);
         return view('admin.requested.show', compact('quotation'));
     }
 

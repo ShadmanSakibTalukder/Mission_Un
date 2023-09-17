@@ -36,7 +36,7 @@
                             <th scope="col">Requested by.</th>
                             <th scope="col">Reqested Orders</th>
                             <th scope="col">Date</th>
-                            <th scope="col">Status</th>
+                            <!-- <th scope="col">Status</th> -->
                             <th scope="col">Action</th>
                         </tr>
                     </thead>
@@ -47,10 +47,10 @@
                             <td>{{ $item->requested_by }}</td>
                             <td>{{ $item->requested_order_no }}</td>
                             <td>{{ $item->requested_date }}</td>
-                            <td>{{ $item->status }}</td>
+                            <!-- <td>{{ $item->status }}</td> -->
                             <td>
                                 <a href="{{route('requested.show',$item->id)}}" class="btn btn-sm link-success"><i class="fa-solid fa-eye fa-lg"></i></a>
-                                <a href="#" class="btn btn-sm link-warning"><i class="fa-solid fa-pen-to-square fa-lg"></i></a>
+                                <!-- <a href="#" class="btn btn-sm link-warning"><i class="fa-solid fa-pen-to-square fa-lg"></i></a> -->
 
                                 <form action="{{route('requested.destroy',$item->id)}}" method="POST" style="display:inline">
                                     @csrf

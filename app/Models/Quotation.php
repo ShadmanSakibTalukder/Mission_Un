@@ -18,6 +18,6 @@ class Quotation extends Model
 
     public function quotationItems(): HasMany
     {
-        return $this->hasMany(QuotationItems::class, 'quote_no', 'id');
+        return $this->hasMany(QuotationItems::class, 'quote_id', 'id');
     }
 }

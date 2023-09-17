@@ -13,13 +13,13 @@ return new class extends Migration
     {
         Schema::create('quotation_items', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('quote_no');
+            $table->unsignedBigInteger('quote_id');
             $table->string('part_no');
             $table->string('nomenclature');
             $table->integer('qty')->default('1');
             $table->timestamps();
 
-            $table->foreign('quote_no')->references('id')->on('quotations')->onDelete('cascade');
+            $table->foreign('quote_id')->references('id')->on('quotations')->onDelete('cascade');
         });
     }
 

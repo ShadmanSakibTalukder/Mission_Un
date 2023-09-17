@@ -99,17 +99,17 @@ class Create extends Component
 
         foreach ($added_to_list as $item) {
             QuotationItems::create([
-                'quote_no' => $quotation->id,
+                'quote_id' => $quotation->id,
                 'part_no' => $item->part_no,
                 'nomenclature' => $item->nomenclature,
                 'qty' => $item->qty,
             ]);
         }
 
-        session()->flash('success_message', 'Tender created successfully!');
 
         AddToList::query()->forceDelete();
         $this->reset(['requested_order_no', 'requested_by', 'requested_date']);
+        session()->flash('success_message', 'Tender created successfully!');
         return true;
     }
 
