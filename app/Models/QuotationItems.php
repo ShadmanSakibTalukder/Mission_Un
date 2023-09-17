@@ -18,8 +18,6 @@ class QuotationItems extends Model
      */
     public function quotation(): BelongsTo
     {
-        return $this->belongsTo(Quotation::class, 'quote_id', 'id');
+        return $this->belongsTo(Quotation::class, 'quote_no', 'id');
     }
-
-    
 }

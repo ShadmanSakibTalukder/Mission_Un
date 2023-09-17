@@ -19,7 +19,7 @@
                 <div class="d-flex justify-content-between flex-wrap align-items-center pt-3 pb-2 mb-3 border-bottom">
                     <h4 class="h2">{{__('Requested Orders')}}</h4>
                     <div class="btn-toolbar mb-2 mb-md-0">
-                        <a type="button" href="{{url('admin/requested/create')}}" class="btn btn-sm btn-outline-secondary float-end ">
+                        <a type="button" href="{{route('requested.create')}}" class="btn btn-sm btn-outline-secondary float-end ">
                             <span><i class="fa-solid fa-plus"></i></span>{{__(' Create')}}
                         </a>
                     </div>
@@ -41,7 +41,7 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @forelse ($quotation  as $item)
+                        @forelse ($quotation as $item)
                         <tr>
                             <td>{{ $loop->iteration }}</td>
                             <td>{{ $item->requested_by }}</td>
@@ -49,10 +49,12 @@
                             <td>{{ $item->requested_date }}</td>
                             <td>{{ $item->status }}</td>
                             <td>
-                                <a href="{{ url('admin/requested/' . $item->id . '/edit') }}" class="btn btn-sm link-warning"><i class="fa-solid fa-pen-to-square fa-lg"></i></a>
-                                <form action="{{ url('admin/requested/' . $item->id) }}" method="POST" style="display: inline;">
+                                <a href="{{route('requested.show',$item->id)}}" class="btn btn-sm link-success"><i class="fa-solid fa-eye fa-lg"></i></a>
+                                <a href="#" class="btn btn-sm link-warning"><i class="fa-solid fa-pen-to-square fa-lg"></i></a>
+
+                                <form action="{{route('requested.destroy',$item->id)}}" method="POST" style="display:inline">
                                     @csrf
-                                    @method('DELETE')
+                                    @method('delete')
                                     <button class="btn btn-sm link-danger" onclick="return confirm('Are you sure you want to delete?')"><i class="fa-solid fa-trash fs-5"></i></button>
                                 </form>
                             </td>
@@ -63,7 +65,7 @@
                         </tr>
                         @endforelse
                     </tbody>
-                    
+
                 </table>
             </div>
         </div>

@@ -13,9 +13,9 @@ class RequestedController extends Controller
     public function index()
 
     {
-        $quotation=Quotation::all();
+        $quotation = Quotation::all();
 
-        return view (('admin.requested.index'), compact('quotation'));
+        return view('admin.requested.index', compact('quotation'));
     }
 
     public function create()
@@ -23,17 +23,19 @@ class RequestedController extends Controller
         return view('admin.requested.create');
     }
 
-    // public function store(RequestedFormRequest $request)
-    // {
-    //     $validatedData= $request->validated();
-    // $requested = new Requested;
-    // $requested->requested_id= $validatedData['requested_id'];
-    // $requested->part_no= $validatedData['part_no'];
-    // $requested->nomenclature= $validatedData['nomenclature'];
-    // $requested->qty= $validatedData['qty'];
-    // $requested->status= $request->status==true ? '1':'0';
-    // $requested->Save();
+    public function show(Quotation $quotation)
+    {
+        dd($quotation->quotationItems);
+        return view('admin.requested.show', compact('quotation'));
+    }
 
-    // return redirect('admin/requested')->with('message','Requested Order Added Successfully');
-    // }
+    public function destroy($id)
+    {
+        $quotation = Quotation::findOrFail($id)->first();
+        // dd($quotation);
+
+        // dd($quotation);
+        $quotation->delete();
+        return redirect()->back()->with('message', 'Successfully deleted!');
+    }
 }

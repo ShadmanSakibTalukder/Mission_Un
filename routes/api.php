@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Api\QuotationApiController;
 use App\Http\Controllers\PartController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -19,5 +20,4 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-// Route::get('mission_part_list', [PartController::class, 'apiIndexMissionSupportPart']);
-// Route::get('mens_part_list', [PartController::class, 'apiIndexMensLogistics']);
+Route::get('mission_quotation', [QuotationApiController::class, 'index']);

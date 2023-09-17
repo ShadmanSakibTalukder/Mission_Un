@@ -22,7 +22,7 @@
                     </a>
                 </li> -->
                 <li class="nav-item">
-                    <a class="nav-link d-flex align-items-center gap-2 active" aria-current="page" href="{{route('admin.requested')}}">
+                    <a class="nav-link d-flex align-items-center gap-2 active" aria-current="page" href="{{route('requested.index')}}">
                         <i class="fa-solid fa-earth-asia fa-spin"></i>
                         Requested List
                     </a>

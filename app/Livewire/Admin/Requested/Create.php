@@ -14,7 +14,7 @@ class Create extends Component
 {
 
     use WithPagination;
-    
+
     public $part_no, $nomenclature, $qty, $requested_order_no, $requested_by, $requested_date;
     public $added_to_list = [];
     public function fetchData()
@@ -25,8 +25,9 @@ class Create extends Component
         // $data = $response->json();
         // return $data;
     }
-     
-    public function addToListStatic(){
+
+    public function addToListStatic()
+    {
         $existingItem = AddToList::where('part_no', $this->part_no)->first();
 
         if ($existingItem) {
@@ -71,55 +72,52 @@ class Create extends Component
                 'part_no' => $part['requestedPartNo'],
                 'nomenclature' => $part['requestedNomenclature'],
                 'qty' => $this->qty,
-               
+
             ]);
             session()->flash('success_message', 'Product added to cart!');
         } else {
             dd("Part with ID {$partId} not found.");
         }
     }
- 
-    
+
+
     public function quotationOrder()
-{
-    $this->validate([
-        'requested_order_no' => 'required|string',
-        'requested_by' => 'required|string',
-        'requested_date' => 'required|date',
-    ]);
-
-    $added_to_list = AddToList::all();
-
-    $quotation = Quotation::create([
-        'requested_order_no' => $this->requested_order_no,
-        'requested_by' => $this->requested_by,
-        'requested_date' => $this->requested_date,
-    ]);
-
-    foreach ($added_to_list as $item) {
-        QuotationItems::create([
-            'quote_no' => $quotation->id,
-            'part_no' => $item->part_no,
-            'nomenclature' => $item->nomenclature,
-            'qty' => $item->qty,
+    {
+        $this->validate([
+            'requested_order_no' => 'required|string',
+            'requested_by' => 'required|string',
+            'requested_date' => 'required|date',
         ]);
-    }
 
-    AddToList::query()->forceDelete();
-    $this->reset(['requested_order_no', 'requested_by', 'requested_date']);
-    return true;
-}
+        $added_to_list = AddToList::all();
+
+        $quotation = Quotation::create([
+            'requested_order_no' => $this->requested_order_no,
+            'requested_by' => $this->requested_by,
+            'requested_date' => $this->requested_date,
+        ]);
+
+        foreach ($added_to_list as $item) {
+            QuotationItems::create([
+                'quote_no' => $quotation->id,
+                'part_no' => $item->part_no,
+                'nomenclature' => $item->nomenclature,
+                'qty' => $item->qty,
+            ]);
+        }
+
+        session()->flash('success_message', 'Tender created successfully!');
+
+        AddToList::query()->forceDelete();
+        $this->reset(['requested_order_no', 'requested_by', 'requested_date']);
+        return true;
+    }
 
     public function render()
     {
         $parts = $this->fetchData();
         $this->added_to_list = AddToList::all();
-        
-        return view('livewire.admin.requested.create', ['parts'=>$parts,'added_to_list'=> $this->added_to_list]);
-    
+
+        return view('livewire.admin.requested.create', ['parts' => $parts, 'added_to_list' => $this->added_to_list]);
     }
-
-
-
-
 }
