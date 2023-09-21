@@ -1,6 +1,6 @@
 <x-master>
     <x-slot:title>
-        Create Vehicles
+        Create Vehicle
     </x-slot:title>
     <div>
     <livewire:admin.vehicles.vehicles />

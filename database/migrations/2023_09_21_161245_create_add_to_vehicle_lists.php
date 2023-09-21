@@ -11,11 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('vehicles', function (Blueprint $table) {
+        Schema::create('add_to_vehicle_lists', function (Blueprint $table) {
             $table->id();
-            $table->string('vin_no');
-            $table->string('captain');
-            $table->date('vin_date');
+            $table->string('part_no');
+            $table->string('nomenclature');
+            $table->integer('qty')->default('1');
             $table->timestamps();
         });
     }
@@ -25,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('vehicles');
+        Schema::dropIfExists('add_to_vehicle_lists');
     }
 };
