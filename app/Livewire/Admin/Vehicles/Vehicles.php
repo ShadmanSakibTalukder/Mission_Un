@@ -105,7 +105,7 @@ class Vehicles extends Component
 
         AddToVehicleList::query()->forceDelete();
         $this->reset(['vin_no', 'captain', 'vin_date']);
-        session()->flash('success_message', 'Tender created successfully!');
+        session()->flash('success_message', 'Vehicle created successfully!');
         return true;
     }
 
