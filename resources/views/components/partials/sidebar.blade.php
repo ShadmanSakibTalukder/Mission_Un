@@ -14,13 +14,13 @@
                     </a>
                 </li>
 
-                <!--
                 <li class="nav-item">
-                    <a class="nav-link d-flex align-items-center gap-2 active" aria-current="page" href="{{route('admin.dashboard')}}">
+                    <a class="nav-link d-flex align-items-center gap-2 active" aria-current="page" href="{{route('vehicles.index')}}">
                         <i class="fa-solid fa-earth-asia fa-spin"></i>
-                        Parts List
+                        Vehicles
                     </a>
-                </li> -->
+                </li>
+
                 <li class="nav-item">
                     <a class="nav-link d-flex align-items-center gap-2 active" aria-current="page" href="{{route('requested.index')}}">
                         <i class="fa-solid fa-earth-asia fa-spin"></i>
