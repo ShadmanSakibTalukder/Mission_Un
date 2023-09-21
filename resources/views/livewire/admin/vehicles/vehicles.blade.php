@@ -1,17 +1,7 @@
 <x-slot:title>
     Create Vehicle
 </x-slot:title>
-{{-- @if (session()->has('message'))
-<div class="alert alert-warning alert-dismissible fade show" role="alert">
-    {{ session('message') }}
-    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-</div>
-@elseif (session()->has('success_message'))
-<div class="alert alert-success alert-dismissible fade show" role="alert">
-    {{ session('success_message') }}
-    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-</div>
-@endif --}}
+
 <div class="container-fluid">
     <div class="row">
         <div class="col-md-12">
@@ -54,7 +44,7 @@
                 </div>
 
                 <form wire:submit.prevent="vehicleOrder">
-                    
+
                     <div class="mb-3">
                         <label for="vin_no" class="form-label">VIN No:</label>
                         <input type="text" class="form-control" id="vin_no" wire:model.defer="vin_no" required>
@@ -89,6 +79,7 @@
                     <table class="table table-bordered tableData">
                         <thead>
                             <tr>
+                                <th>Image</th>
                                 <th>Parts No.</th>
                                 <th>Nomenclature</th>
                                 <th>QTY</th>
@@ -97,6 +88,7 @@
                         </thead>
                         <tbody>
                             <tr>
+                                <td>...</td>
                                 <td>
                                     <input type="text" class="form-control" id="part_no" wire:model.defer="part_no" name="part_no">
                                 </td>
@@ -107,14 +99,15 @@
                                     <input type="qty" class="form-control" id="qty" wire:model.defer="qty" name="qty">
                                 </td>
                                 <td><button type="button" wire:click="vehicleListStatic()" wire:loading.attr="disabled" wire:target="vehicleListStatic({{ $part_no }})" class="btn btn1 rounded mb-5" title="{{__('Add To Vehicle')}}">
-                                    <span wire:loading.remove wire:target="vehicleListStatic({{ $part_no }})">
-                                        <i class="fa fa-plus fa-bounce"></i>
-                                    </span>
-                                    <span wire:loading wire:target="vehicleListStatic({{ $part_no }})">{{__('Adding...')}}</span>
-                                </button></td>
+                                        <span wire:loading.remove wire:target="vehicleListStatic({{ $part_no }})">
+                                            <i class="fa fa-plus fa-bounce"></i>
+                                        </span>
+                                        <span wire:loading wire:target="vehicleListStatic({{ $part_no }})">{{__('Adding...')}}</span>
+                                    </button></td>
                             </tr>
                             @forelse ($parts as $item)
                             <tr>
+                                <td><img src="{{ $item["image_url"] }}" alt="Part Image" width="200"></td>
                                 <td>{{$item['requestedPartNo']}}</td>
                                 <td>{{$item['requestedNomenclature']}}</td>
                                 <td><input type="qty" class="form-control" id="qty" wire:model.defer="qty" name="qty"></td>
@@ -143,7 +136,7 @@
         </div>
     </div>
     @push('js')
-        
+
     <script>
         const searchInput = document.getElementById('search');
         const tableRows = document.querySelectorAll('#tableData tr');
