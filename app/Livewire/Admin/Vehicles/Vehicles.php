@@ -4,10 +4,10 @@ namespace App\Livewire\Admin\Vehicles;
 
 use App\Livewire\Admin;
 use Livewire\Component;
-use App\Models\Vehicle;
 use App\Models\VehicleItems;
 use Livewire\WithPagination;
 use App\Models\AddToVehicleList;
+use App\Models\Vehicles as ModelsVehicles;
 use Illuminate\Support\Facades\Http;
 
 class Vehicles extends Component
@@ -79,6 +79,7 @@ class Vehicles extends Component
 
     public function vehicleOrder()
     {
+        // dd('I am here');
         $this->validate([
             'vin_no' => 'required|string',
             'captain' => 'required|string',
@@ -87,7 +88,7 @@ class Vehicles extends Component
 
         $added_to_list = AddToVehicleList::all();
 
-        $vehicles = Vehicles::create([
+        $vehicles = ModelsVehicles::create([
             'vin_no' => $this->vin_no,
             'captain' => $this->captain,
             'vin_date' => $this->vin_date,
