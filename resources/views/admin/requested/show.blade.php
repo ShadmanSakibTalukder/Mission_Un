@@ -1,10 +1,10 @@
 <x-master>
     <x-slot:title>
-        Quotation No : {{$quotation->requested_order_no}}
+        Requisition No : {{$quotation->requested_order_no}}
     </x-slot:title>
 
     <div class="card-header">
-        <h2> Quotation No : {{$quotation->requested_order_no}}</h2>
+        <h2> Requisitions No : {{$quotation->requested_order_no}}</h2>
         <div class="d-flex justify-content-end align-items-center">
             <a href="{{route('requested.index')}}" class="btn btn-primary btn-sm text-white me-2">Quotation List</a>
         </div>

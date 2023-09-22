@@ -30,45 +30,105 @@
             <div class="col-md-12">
 
                 <table class="table table-borderless">
-                    {{-- <thead>
+                    <thead>
                         <tr>
-                            <th scope="col">No.</th>
+                            <th scope="col">Sl</th>
                             <th scope="col">VIN</th>
-                            <th scope="col">Parts No</th>
-                            <th scope="col">Nomenclature</th>
-                            <th scope="col">qty</th>
-                            <!-- <th scope="col">Status</th> -->
+                            <th scope="col">Captain</th>
                             <th scope="col">Action</th>
                         </tr>
-                    </thead> --}}
-                    {{-- <tbody>
-                        @forelse ($quotation as $item)
-                        <tr>
+                    </thead>
+                    <tbody>
+                        @forelse ($vehicles as $item)
+                        <tr data-toggle="modal" data-target="#myModal{{$item->id}}">
                             <td>{{ $loop->iteration }}</td>
-                            <td>{{ $item->requested_by }}</td>
-                            <td>{{ $item->requested_order_no }}</td>
-                            <td>{{ $item->requested_date }}</td>
+                            <td>{{ $item->vin_no }}</td>
+                            <td>{{ $item->captain }}</td>
+                            <td>{{ $item->vin_date }}</td>
                             <!-- <td>{{ $item->status }}</td> -->
                             <td>
-                                <a href="{{route('requested.show',$item->id)}}" class="btn btn-sm link-success"><i class="fa-solid fa-eye fa-lg"></i></a>
-                                <!-- <a href="#" class="btn btn-sm link-warning"><i class="fa-solid fa-pen-to-square fa-lg"></i></a> -->
+                                <a href="" class=" btn btn-sm link-info"><i class="fa-solid fa-pen-to-square fa-lg"></i></a>
 
-                                <form action="{{route('requested.destroy',$item->id)}}" method="POST" style="display:inline">
-                                    @csrf
-                                    @method('delete')
-                                    <button class="btn btn-sm link-danger" onclick="return confirm('Are you sure you want to delete?')"><i class="fa-solid fa-trash fs-5"></i></button>
-                                </form>
                             </td>
                         </tr>
                         @empty
                         <tr>
-                            <td colspan="6">{{ __('No requested orders available.') }}</td>
+                            <td colspan="6">{{ __('No Vehicles Available') }}</td>
                         </tr>
                         @endforelse
-                    </tbody> --}}
+                    </tbody>
 
                 </table>
             </div>
         </div>
+        @foreach ($vehicles as $item)
+        <div class="modal fade" id="myModal{{$item->id}}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel{{$item->id}}">
+            <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title" id="myModalLabel{{$item->id}}"> <strong>VIN No : </strong>{{$item->vin_no}}</h4><br>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <p class="mx-5"> Captain : {{$item->captain}}</p>
+                    <div class="modal-body">
+                        <div class="container-fluid">
+                            <div class="row">
+                                <div class="col-md-12">
+
+                                    <table class="table table-borderless">
+                                        <thead>
+                                            <tr>
+                                                <th scope="col">Sl</th>
+                                                <th scope="col">Part No</th>
+                                                <th scope="col">Nomenclature</th>
+                                                <th scope="col">Qty</th>
+                                                <th scope="col">Action</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            @forelse ($item->vehicleItems as $vitem)
+                                            <tr>
+                                                <td>{{ $loop->iteration }}</td>
+                                                <td>{{ $vitem->part_no }}</td>
+                                                <td>{{ $vitem->nomenclature }}</td>
+                                                <td>{{ $vitem->qty }}</td>
+                                                <td>
+                                                    <a href="" class=" btn btn-sm link-info"><i class="fa-solid fa-pen-to-square fa-lg"></i></a>
+
+                                                </td>
+                                            </tr>
+                                            @empty
+                                            <tr>
+                                                <td colspan="6">{{ __('No Vehicles Available') }}</td>
+                                            </tr>
+                                            @endforelse
+                                        </tbody>
+
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        @endforeach
     </div>
+    @push('js')
+    <script>
+        $(document).ready(function() {
+            $('tr[data-toggle="modal"]').click(function() {
+                var targetModal = $(this).data('target');
+                $(targetModal).modal('show');
+            });
+        });
+    </script>
+
+
+
+
+    @endpush
 </x-master>
