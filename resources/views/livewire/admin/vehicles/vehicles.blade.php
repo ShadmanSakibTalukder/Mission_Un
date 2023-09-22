@@ -120,17 +120,9 @@
                             <tr data-toggle="modal" data-target="#myModal{{$item['id']}}">
                                 <td><img src="{{ $item["image_url"] }}" alt="Part Image" width="200"></td>
                                 <td>{{$item['requestedPartNo']}}</td>
-                                <td>{{$item['requestedNomenclature']}}</td>
-                                <td><input type="qty" class="form-control" id="qty" wire:model.defer="qty" name="qty"></td>
+                                <td colspan="3">{{$item['requestedNomenclature']}}</td>
 
-                                <td>
-                                    <button type="button" wire:click="vehicleListDynamic({{$item['id']}})" class="btn btn1 rounded" title="{{__('Add To List')}}">
-                                        <span wire:loading.remove wire:target="vehicleListDynamic">
-                                            <i class="fa-solid fa-plus fa-bounce"></i>
-                                        </span>
-                                        <span wire:loading wire:target="vehicleListDynamic">{{__('Adding...')}}</span>
-                                    </button>
-                                </td>
+
                             </tr>
 
                             @empty
@@ -168,6 +160,14 @@
                                         <p><strong>Part No:</strong> {{$item['requestedPartNo']}}</p>
                                         <p><strong>Nomenclature:</strong> {{$item['requestedNomenclature']}}</p>
                                         <!-- Add more details as needed -->
+                                        <p> <strong>Quantity:</strong><input type="qty" class="form-control" id="qty" wire:model.defer="qty" name="qty" placeholder="Insert Quantity...">
+                                        </p>
+                                        <button type="button" wire:click="vehicleListDynamic({{$item['id']}})" class="btn btn1 rounded btn-success" title="{{__('Add To List')}}">
+                                            <span wire:loading.remove wire:target="vehicleListDynamic">
+                                                <i class="fa-solid fa-plus fa-bounce"> Add</i>
+                                            </span>
+                                            <span wire:loading wire:target="vehicleListDynamic">{{__('Adding...')}}</span>
+                                        </button>
                                     </div>
                                 </div>
                                 <!-- Add another row for additional details if necessary -->
@@ -189,6 +189,16 @@
             $('tr[data-toggle="modal"]').click(function() {
                 var targetModal = $(this).data('target');
                 $(targetModal).modal('show');
+            });
+            $('tr[data-toggle="modal"]').click(function() {
+                var targetModal = $(this).data('target');
+                $(targetModal).modal('show');
+            });
+
+            // Add a click event listener to the "Add To List" button
+            $('.btn1').click(function() {
+                // Find the closest modal to the clicked button and hide it
+                $(this).closest('.modal').modal('hide');
             });
         });
     </script>

@@ -44,6 +44,7 @@ class Vehicles extends Component
             ]);
 
             session()->flash('success_message', $order_item->nomenclature . ' added to wishlist!');
+            $this->reset(['qty']);
 
             $this->reset(['part_no', 'nomenclature', 'qty']);
         }
@@ -72,6 +73,7 @@ class Vehicles extends Component
 
             ]);
             session()->flash('success_message', 'Product added to cart!');
+            $this->reset(['qty']);
         } else {
             dd("Part with ID {$partId} not found.");
         }
