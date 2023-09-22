@@ -76,7 +76,18 @@ class Vehicles extends Component
             dd("Part with ID {$partId} not found.");
         }
     }
-
+    public function removeListItem($listId)
+    {
+        $itemInList = AddToVehicleList::where('id', $listId)->first();
+        if ($itemInList) {
+            $itemInList->delete();
+            // $this->emit('ListUpdate');
+            session()->flash('success_message', 'Deleted!');
+        } else {
+            session()->flash('message', 'Something went wrong. Please refresh.');
+            return false;
+        }
+    }
     public function vehicleOrder()
     {
         // dd('I am here');

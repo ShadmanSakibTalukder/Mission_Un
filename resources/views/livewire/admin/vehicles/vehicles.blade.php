@@ -21,6 +21,7 @@
                                 <th>Parts No.</th>
                                 <th>Nomenclature</th>
                                 <th>Qty</th>
+                                <th>Remove</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -31,6 +32,16 @@
                                 <td>{{ $item->part_no }}</td>
                                 <td>{{ $item->nomenclature }}</td>
                                 <td>{{ $item->qty }}</td>
+                                <td>
+                                    <div class="remove">
+                                        <button type="button" wire:click="removeListItem({{ $item->id }})" wire:loading.attr="disabled" class="btn btn-danger btn-sm" title="{{__('Remove')}}">
+                                            <span wire:loading.remove wire:target="removeListItem({{ $item->id }})">
+                                                <i class="fa fa-trash"></i>
+                                            </span>
+                                            <span wire:loading wire:target="removeListItem({{ $item->id }})">{{__('Removing')}}</span>
+                                        </button>
+                                    </div>
+                                </td>
                             </tr>
                             @empty
                             <tr>
@@ -106,7 +117,7 @@
                                     </button></td>
                             </tr>
                             @forelse ($parts as $item)
-                            <tr>
+                            <tr data-toggle="modal" data-target="#myModal{{$item['id']}}">
                                 <td><img src="{{ $item["image_url"] }}" alt="Part Image" width="200"></td>
                                 <td>{{$item['requestedPartNo']}}</td>
                                 <td>{{$item['requestedNomenclature']}}</td>
@@ -135,8 +146,52 @@
             </div>
         </div>
     </div>
-    @push('js')
 
+    @foreach ($parts as $item)
+    <div class="modal fade" id="myModal{{$item['id']}}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel{{$item['id']}}">
+        <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title" id="myModalLabel{{$item['id']}}">{{$item['requestedNomenclature']}}</h4>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="container">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <img style="max-width: 100%; height: auto; max-height: 300px;" src="{{ $item["image_url"] }}" alt="image">
+                            </div>
+                            <div class="col-md-6">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <p><strong>NSN:</strong> {{$item['nsn']}}</p>
+                                        <p><strong>Part No:</strong> {{$item['requestedPartNo']}}</p>
+                                        <p><strong>Nomenclature:</strong> {{$item['requestedNomenclature']}}</p>
+                                        <!-- Add more details as needed -->
+                                    </div>
+                                </div>
+                                <!-- Add another row for additional details if necessary -->
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    @endforeach
+
+    @push('js')
+    <script>
+        $(document).ready(function() {
+            $('tr[data-toggle="modal"]').click(function() {
+                var targetModal = $(this).data('target');
+                $(targetModal).modal('show');
+            });
+        });
+    </script>
     <script>
         const searchInput = document.getElementById('search');
         const tableRows = document.querySelectorAll('#tableData tr');

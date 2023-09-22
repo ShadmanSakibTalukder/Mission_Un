@@ -80,6 +80,19 @@ class Create extends Component
         }
     }
 
+    public function removeListItem($listId)
+    {
+        $itemInList = AddToList::where('id', $listId)->first();
+        if ($itemInList) {
+            $itemInList->delete();
+            // $this->emit('ListUpdate');
+            session()->flash('success_message', 'Deleted!');
+        } else {
+            session()->flash('message', 'Something went wrong. Please refresh.');
+            return false;
+        }
+    }
+
 
     public function quotationOrder()
     {
