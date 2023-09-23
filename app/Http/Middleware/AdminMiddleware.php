@@ -16,7 +16,7 @@ class AdminMiddleware
      */
     public function handle(Request $request, Closure $next): Response
     {
-        if (!Auth::user()->role_as == '1') {
+        if (!Auth::user()->role_as == '1' || !Auth::user()->role_as == '2') {
             return redirect('/home')->with('message', 'Not Authorised');
         }
         return $next($request);

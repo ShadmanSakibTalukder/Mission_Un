@@ -20,6 +20,12 @@
                         Vehicles
                     </a>
                 </li>
+                <li class="nav-item">
+                    <a class="nav-link d-flex align-items-center gap-2 active" aria-current="page" href="{{route('missions.index')}}">
+                        <i class="fa-solid fa-earth-asia fa-spin"></i>
+                        Missions
+                    </a>
+                </li>
 
                 <li class="nav-item">
                     <a class="nav-link d-flex align-items-center gap-2 active" aria-current="page" href="{{route('requested.index')}}">

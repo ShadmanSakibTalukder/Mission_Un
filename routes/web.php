@@ -10,6 +10,7 @@ use App\Http\Controllers\PurchaseOrderController;
 use App\Http\Controllers\Admin\VehiclesController;
 use App\Http\Controllers\admin\dashboardController;
 use App\Http\Controllers\Admin\RequestedController;
+use App\Http\Controllers\MissionController;
 
 /*
 |--------------------------------------------------------------------------
@@ -38,5 +39,6 @@ Route::prefix('admin')->middleware(['auth', 'isAdmin'])->group(function () {
     // Route::get('requested', [App\Http\Controllers\Admin\RequestedController::class, 'index'])->name('admin.requested');
     // Route::get('requested/create', [App\Http\Controllers\Admin\RequestedController::class, 'create']);
     Route::resource('requested', RequestedController::class);
-    Route::resource('vehicles',VehiclesController::class);
+    Route::resource('vehicles', VehiclesController::class);
+    Route::resource('missions', MissionController::class);
 });
