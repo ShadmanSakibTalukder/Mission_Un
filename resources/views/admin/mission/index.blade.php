@@ -144,14 +144,25 @@
                                     @error('commanding_officer') <small class="text-danger">{($message)}</small> @enderror
                                 </div>
                                 <div class="col-md-12 mb-3">
-                                    <label>Motor Transport Officer (MTO)</label>
+                                    <label>CO Email</label>
+                                    <input type="text" name="co_email" class="form-control" />
+                                    @error('co_email') <small class="text-danger">{($message)}</small> @enderror
+                                </div>
+                                <div class="col-md-12 mb-3">
+                                    <label>MTO </label>
                                     <input type="text" name="mto" class="form-control" />
                                     @error('mto') <small class="text-danger">{($message)}</small> @enderror
-                                </div <div class="row">
-                                <div class="col-md-12 mb-3">
-                                    <button type="submit" class="btn btn-md btn-outline-primary px-3 mx-2">Save</button>
                                 </div>
-                            </div>
+                                <div class="col-md-12 mb-3">
+                                    <label>MTO Email</label>
+                                    <input type="text" name="mto_email" class="form-control" />
+                                    @error('mto_email') <small class="text-danger">{($message)}</small> @enderror
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-12 mb-3">
+                                        <button type="submit" class="btn btn-md btn-outline-primary px-3 mx-2">Save</button>
+                                    </div>
+                                </div>
                         </form>
                     </div>
                     <div class="modal-footer">

@@ -5,6 +5,9 @@ namespace App\Http\Controllers;
 use App\Models\Mission;
 use App\Http\Requests\StoreMissionRequest;
 use App\Http\Requests\UpdateMissionRequest;
+use App\Models\User;
+use App\Notifications\SendLoginCredentials;
+use Illuminate\Support\Str;
 
 class MissionController extends Controller
 {
@@ -36,10 +39,13 @@ class MissionController extends Controller
             'country' => $request->country,
             'address' => $request->address,
             'commanding_officer' => $request->commanding_officer,
+            'co_email' => $request->co_email,
             'mto' => $request->mto,
+            'mto_email' => $request->mto_email,
         ];
 
-        Mission::create($requestData);
+        $mission = Mission::create($requestData);
+        $this->generateUserAccounts($mission);
 
         return redirect()->back()->with('success_message', 'Mission Created Successfully!');
     }
@@ -74,5 +80,26 @@ class MissionController extends Controller
     public function destroy(Mission $mission)
     {
         //
+    }
+
+    private function generateUserAccounts(Mission $mission)
+    {
+        $coUser = User::create([
+            'name' => $mission->commanding_officer,
+            'email' => $mission->co_email,
+            'password' => bcrypt(Str::random(8)),
+            'mission_id' => $mission->id,
+            'role_as' => 1,
+        ]);
+        $coUser->notify(new SendLoginCredentials());
+
+        $mtoUser = User::create([
+            'name' => $mission->mto,
+            'email' => $mission->mto_email,
+            'password' => bcrypt(Str::random(8)),
+            'mission_id' => $mission->id,
+            'role_as' => 1,
+        ]);
+        $mtoUser->notify(new SendLoginCredentials());
     }
 }

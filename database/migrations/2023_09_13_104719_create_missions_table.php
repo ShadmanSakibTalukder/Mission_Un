@@ -17,7 +17,9 @@ return new class extends Migration
             $table->string('country');
             $table->mediumText('address');
             $table->string('commanding_officer');
+            $table->string('co_email');
             $table->string('mto');
+            $table->string('mto_email');
             $table->tinyInteger('status')->default('0')->comment('1=return,0=on_going');
             $table->timestamps();
         });
