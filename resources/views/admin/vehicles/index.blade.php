@@ -35,6 +35,7 @@
                             <th scope="col">Sl</th>
                             <th scope="col">VIN</th>
                             <th scope="col">Captain</th>
+                            <th scope="col">Date</th>
                             <th scope="col">Action</th>
                         </tr>
                     </thead>

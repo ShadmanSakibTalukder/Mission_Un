@@ -1,6 +1,6 @@
 <x-master>
     <x-slot:title>
-        Dashboard
+       Mission UN
     </x-slot:title>
     @if (session()->has('message'))
     <div class="alert alert-warning alert-dismissible fade show" role="alert">
