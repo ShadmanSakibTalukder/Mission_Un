@@ -8,6 +8,7 @@ use App\Http\Requests\UpdateMissionRequest;
 use App\Mail\SendLoginCredentialMail;
 use App\Models\User;
 use App\Notifications\SendLoginCredentials;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Str;
 
@@ -18,8 +19,12 @@ class MissionController extends Controller
      */
     public function index()
     {
-        $missions = Mission::all();
-        return view('admin.mission.index', compact('missions'));
+        if (Auth::user()->role_as == '2') {
+            $missions = Mission::all();
+            return view('admin.mission.index', compact('missions'));
+        } else {
+            return redirect()->back()->with('message', 'Access Not Authorised!');
+        }
     }
 
     /**
@@ -36,20 +41,24 @@ class MissionController extends Controller
     public function store(StoreMissionRequest $request)
     {
         // dd($request);
-        $requestData = [
-            'name' => $request->name,
-            'country' => $request->country,
-            'address' => $request->address,
-            'commanding_officer' => $request->commanding_officer,
-            'co_email' => $request->co_email,
-            'mto' => $request->mto,
-            'mto_email' => $request->mto_email,
-        ];
+        if (Auth::user()->role_as == '2') {
+            $requestData = [
+                'name' => $request->name,
+                'country' => $request->country,
+                'address' => $request->address,
+                'commanding_officer' => $request->commanding_officer,
+                'co_email' => $request->co_email,
+                'mto' => $request->mto,
+                'mto_email' => $request->mto_email,
+            ];
 
-        $mission = Mission::create($requestData);
-        $this->generateUserAccounts($mission);
+            $mission = Mission::create($requestData);
+            $this->generateUserAccounts($mission);
 
-        return redirect()->back()->with('success_message', 'Mission Created Successfully!');
+            return redirect()->back()->with('success_message', 'Mission Created Successfully!');
+        } else {
+            return redirect()->back()->with('message', 'Access Not Authorised!');
+        }
     }
 
     /**
@@ -84,62 +93,39 @@ class MissionController extends Controller
         //
     }
 
-    // private function generateUserAccounts(Mission $mission)
-    // {
-    //     $coUser = User::create([
-    //         'name' => $mission->commanding_officer,
-    //         'email' => $mission->co_email,
-    //         'password' => bcrypt(Str::random(8)),
-    //         'mission_id' => $mission->id,
-    //         'role_as' => 1,
-    //     ]);
-    //     $coUser->notify(new SendLoginCredentials());
 
-    //     $mtoUser = User::create([
-    //         'name' => $mission->mto,
-    //         'email' => $mission->mto_email,
-    //         'password' => bcrypt(Str::random(8)),
-    //         'mission_id' => $mission->id,
-    //         'role_as' => 1,
-    //     ]);
-    //     $mtoUser->notify(new SendLoginCredentials());
-    // }
 
 
     private function generateUserAccounts(Mission $mission)
     {
-        $coPassword = Str::random(8);
-        $mtoPassword = Str::random(8);
-        $role = 1;
-        $coUser = User::create([
-            'name' => $mission->commanding_officer,
-            'email' => $mission->co_email,
-            'password' => $coPassword,
-            'mission_id' => $mission->id,
-            'role_as' => $role,
-        ]);
+        if (Auth::user()->role_as == '2') {
+            $coPassword = Str::random(8);
+            $mtoPassword = Str::random(8);
+            $role = 1;
+            $coUser = User::create([
+                'name' => $mission->commanding_officer,
+                'email' => $mission->co_email,
+                'password' => $coPassword,
+                'mission_id' => $mission->id,
+                'role_as' => $role,
+            ]);
 
-        // Generate a random password or use your password generation logic
+            Mail::to($coUser->email)->send(new SendLoginCredentialMail($coUser, $coPassword));
 
+            $mtoUser = User::create([
+                'name' => $mission->mto,
+                'email' => $mission->mto_email,
+                'password' => $mtoPassword,
+                'mission_id' => $mission->id,
+                'role_as' => '1',
+            ]);
 
-        // Send the email with login credentials, including user ID and password
-        Mail::to($coUser->email)->send(new SendLoginCredentialMail($coUser, $coPassword));
-
-        $mtoUser = User::create([
-            'name' => $mission->mto,
-            'email' => $mission->mto_email,
-            'password' => $mtoPassword,
-            'mission_id' => $mission->id,
-            'role_as' => '1',
-        ]);
-
-        // Generate a random password or use your password generation logic
-
-
-        // Send the email with login credentials, including user ID and password
-        Mail::to($mtoUser->email)->send(new SendLoginCredentialMail(
-            $mtoUser,
-            $mtoPassword
-        ));
+            Mail::to($mtoUser->email)->send(new SendLoginCredentialMail(
+                $mtoUser,
+                $mtoPassword
+            ));
+        } else {
+            return redirect()->back()->with('message', 'Access Not Authorised!');
+        }
     }
 }

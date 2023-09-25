@@ -13,17 +13,18 @@
                         Dashboard
                     </a>
                 </li>
-
-                <li class="nav-item">
-                    <a class="nav-link d-flex align-items-center gap-2 active" aria-current="page" href="{{route('vehicles.index')}}">
-                        <i class="fa-solid fa-earth-asia fa-spin"></i>
-                        Vehicles
-                    </a>
-                </li>
+                @if (Auth::user()->role_as=='2')
                 <li class="nav-item">
                     <a class="nav-link d-flex align-items-center gap-2 active" aria-current="page" href="{{route('missions.index')}}">
                         <i class="fa-solid fa-earth-asia fa-spin"></i>
                         Missions
+                    </a>
+                </li>
+                @endif
+                <li class="nav-item">
+                    <a class="nav-link d-flex align-items-center gap-2 active" aria-current="page" href="{{route('vehicles.index')}}">
+                        <i class="fa-solid fa-earth-asia fa-spin"></i>
+                        Vehicles
                     </a>
                 </li>
 
