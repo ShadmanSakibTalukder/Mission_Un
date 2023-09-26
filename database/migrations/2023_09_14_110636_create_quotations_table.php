@@ -14,9 +14,11 @@ return new class extends Migration
         Schema::create('quotations', function (Blueprint $table) {
             $table->id();
             $table->string('requested_order_no');
-            $table->string('requested_by');
+            $table->unsignedBigInteger('mission_id');
             $table->date('requested_date');
             $table->timestamps();
+
+            $table->foreign('mission_id')->references('id')->on('missions')->onDelete('cascade');
         });
     }
 

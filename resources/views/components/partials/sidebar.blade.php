@@ -22,10 +22,26 @@
                 </li>
                 @endif
                 <li class="nav-item">
-                    <a class="nav-link d-flex align-items-center gap-2 active" aria-current="page" href="{{route('vehicles.index')}}">
-                        <i class="fa-solid fa-earth-asia fa-spin"></i>
-                        Vehicles
-                    </a>
+
+                    <button class="btn btn-toggle align-items-center rounded collapsed" data-bs-toggle="collapse" data-bs-target="#dashboard-collapse" aria-expanded="false">
+                        <i class="fa-solid fa-earth-asia fa-spin"></i> Vehicles
+                    </button>
+                    <div class="collapse" id="dashboard-collapse">
+                        <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
+                            <li>
+                                <a class="nav-link d-flex align-items-center gap-2 active" aria-current="page" href="{{route('vehicles.index')}}">
+                                    <i class="fa-solid fa-earth-asia fa-spin"></i>
+                                    Assigned Vehicles
+                                </a>
+                            </li>
+                            <li>
+                                <a class="nav-link d-flex align-items-center gap-2 active" aria-current="page" href="#">
+                                    <i class="fa-solid fa-earth-asia fa-spin"></i>
+                                    Maintanence reports
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
                 </li>
 
                 <li class="nav-item">

@@ -70,8 +70,8 @@
                         <h4 class="modal-title" id="myModalLabel{{$item->id}}"> <strong>VIN No : </strong>{{$item->vin_no}}</h4><br>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
-                    <p class="mx-5"> Captain : {{$item->captain}}</p>
-                    <p class="mx-5"> Captain : {{$item->mission->name}}</p>
+                    <p class="mx-5"><strong> Captain :</strong> {{$item->captain}}</p>
+                    <p class="mx-5 fs-3 text-info"> <strong>Mission :</strong> {{$item->mission->name}}</p>
                     <div class="modal-body">
                         <div class="container-fluid">
                             <div class="row">
@@ -84,6 +84,7 @@
                                                 <th scope="col">Part No</th>
                                                 <th scope="col">Nomenclature</th>
                                                 <th scope="col">Qty</th>
+                                                <th scope="col">Use</th>
                                                 <th scope="col">Action</th>
                                             </tr>
                                         </thead>
@@ -93,9 +94,17 @@
                                                 <td>{{ $loop->iteration }}</td>
                                                 <td>{{ $vitem->part_no }}</td>
                                                 <td>{{ $vitem->nomenclature }}</td>
-                                                <td>{{ $vitem->qty }}</td>
                                                 <td>
-                                                    <a href="" class=" btn btn-sm link-info"><i class="fa-solid fa-pen-to-square fa-lg"></i></a>
+                                                    <span class="qty" data-item-id="{{ $vitem->id }}">{{ $vitem->qty }}</span>
+                                                </td>
+                                                <td>
+                                                    <!-- <a href="" class=" btn btn-sm link-danger"><i class="fa-solid fa-hammer">Use</i></a> -->
+                                                    <button class="btn btn-sm link-danger usePartButton" data-id="{{ $vitem->id }}">
+                                                        <i class="fa-solid fa-hammer">Use</i>
+                                                    </button>
+                                                </td>
+                                                <td>
+                                                    <a href="" class=" btn btn-sm link-info"><i class="fa-solid fa-pen-to-square fa-lg">Edit</i></a>
 
                                                 </td>
                                             </tr>
@@ -126,11 +135,35 @@
                 var targetModal = $(this).data('target');
                 $(targetModal).modal('show');
             });
+
+            $('.usePartButton').click(function() {
+                var itemId = $(this).data('id');
+                var csrfToken = $('meta[name="csrf-token"]').attr('content'); // Retrieve the CSRF token
+                var qtyElement = $('.qty[data-item-id="' + itemId + '"]');
+
+                $.ajax({
+                    type: 'POST',
+                    url: '/admin/vehicles/update_vehicle/' + itemId, // Adjust the URL as needed
+                    data: {
+                        _token: csrfToken, // Include the CSRF token in the data
+                    },
+                    success: function(response) {
+                        // Handle the response here, e.g., update the UI
+                        console.log(response);
+                        if (response.success) {
+                            // Update the displayed quantity in real-time
+                            qtyElement.text(response.newQty);
+                            alert('Part used successfully. New quantity: ' + response.newQty);
+                        } else {
+                            console.error('Qty update failed.');
+                        }
+                    },
+                    error: function(xhr, status, error) {
+                        console.error(error);
+                    }
+                });
+            });
         });
     </script>
-
-
-
-
     @endpush
 </x-master>

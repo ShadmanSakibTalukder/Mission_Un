@@ -44,7 +44,7 @@
                         @forelse ($quotation as $item)
                         <tr data-toggle="modal" data-target="#myModal{{$item->id}}">
                             <td>{{ $loop->iteration }}</td>
-                            <td>{{ $item->requested_by }}</td>
+                            <td>{{ $item->mission->name }}</td>
                             <td>{{ $item->requested_order_no }}</td>
                             <td>{{ $item->requested_date }}</td>
                             <!-- <td>{{ $item->status }}</td> -->

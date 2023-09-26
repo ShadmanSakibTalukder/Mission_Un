@@ -39,6 +39,8 @@ Route::prefix('admin')->middleware(['auth', 'isAdmin'])->group(function () {
     // Route::get('requested', [App\Http\Controllers\Admin\RequestedController::class, 'index'])->name('admin.requested');
     // Route::get('requested/create', [App\Http\Controllers\Admin\RequestedController::class, 'create']);
     Route::resource('requested', RequestedController::class);
+    Route::post('/vehicles/update_vehicle/{id}', [VehiclesController::class, 'partsUsed']);
     Route::resource('vehicles', VehiclesController::class);
+
     Route::resource('missions', MissionController::class);
 });

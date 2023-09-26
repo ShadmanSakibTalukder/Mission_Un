@@ -8,6 +8,7 @@ use App\Models\AddToList;
 use App\Models\Quotation;
 use Livewire\WithPagination;
 use App\Models\QuotationItems;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Http;
 
 class Create extends Component
@@ -28,6 +29,7 @@ class Create extends Component
 
     public function addToListStatic()
     {
+        $userMissionId = Auth::user()->mission_id;
         $existingItem = AddToList::where('part_no', $this->part_no)->first();
 
         if ($existingItem) {
@@ -43,6 +45,7 @@ class Create extends Component
                 'part_no' => $this->part_no,
                 'nomenclature' => $this->nomenclature,
                 'qty' => $this->qty,
+                'mission_id' => $userMissionId,
             ]);
 
             // $this->emit('addToTenderListUpdated');
@@ -56,29 +59,34 @@ class Create extends Component
     public function addToListDynamic($partId)
     {
         $parts = $this->fetchData();
-        // $part = $parts->findOrFail($partId);
-        // dd($part);
+        $existingItem = AddToList::where('part_no', $this->part_no)->first();
 
-        $part = null;
-        foreach ($parts as $item) {
-            if ($item['id'] == $partId) {
-                $part = $item;
-                break;
-            }
-        }
-
-        if ($part) {
-            // dd($part['requestedPartNo']);
-            AddToList::create([
-                'part_no' => $part['requestedPartNo'],
-                'nomenclature' => $part['requestedNomenclature'],
-                'qty' => $this->qty,
-
-            ]);
-            session()->flash('success_message', 'Product added to cart!');
-            $this->reset(['qty']);
+        $userMissionId = Auth::user()->mission_id;
+        if ($existingItem) {
+            session()->flash('message', $existingItem->nomenclature . ' already added to wishlist!');
         } else {
-            dd("Part with ID {$partId} not found.");
+            $part = null;
+            foreach ($parts as $item) {
+                if ($item['id'] == $partId) {
+                    $part = $item;
+                    break;
+                }
+            }
+
+            if ($part) {
+                // dd($part['requestedPartNo']);
+                AddToList::create([
+                    'part_no' => $part['requestedPartNo'],
+                    'nomenclature' => $part['requestedNomenclature'],
+                    'qty' => $this->qty,
+                    'mission_id' => $userMissionId,
+
+                ]);
+                session()->flash('success_message', 'Product added to cart!');
+                $this->reset(['qty']);
+            } else {
+                dd("Part with ID {$partId} not found.");
+            }
         }
     }
 
@@ -98,9 +106,9 @@ class Create extends Component
 
     public function quotationOrder()
     {
+        $userMissionId = Auth::user()->mission_id;
         $this->validate([
             'requested_order_no' => 'required|string',
-            'requested_by' => 'required|string',
             'requested_date' => 'required|date',
         ]);
 
@@ -108,8 +116,8 @@ class Create extends Component
 
         $quotation = Quotation::create([
             'requested_order_no' => $this->requested_order_no,
-            'requested_by' => $this->requested_by,
             'requested_date' => $this->requested_date,
+            'mission_id' => $userMissionId
         ]);
 
         foreach ($added_to_list as $item) {
@@ -123,7 +131,7 @@ class Create extends Component
 
 
         AddToList::query()->forceDelete();
-        $this->reset(['requested_order_no', 'requested_by', 'requested_date']);
+        $this->reset(['requested_order_no', 'requested_date']);
         session()->flash('success_message', 'Tender created successfully!');
         return true;
     }
