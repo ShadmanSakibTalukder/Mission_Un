@@ -35,7 +35,7 @@
                                 </a>
                             </li>
                             <li>
-                                <a class="nav-link d-flex align-items-center gap-2 active" aria-current="page" href="#">
+                                <a class="nav-link d-flex align-items-center gap-2 active" aria-current="page" href="{{route('maintenance.index')}}">
                                     <i class="fa-solid fa-earth-asia fa-spin"></i>
                                     Maintanence reports
                                 </a>

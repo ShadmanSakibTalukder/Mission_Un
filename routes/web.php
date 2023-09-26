@@ -10,6 +10,7 @@ use App\Http\Controllers\PurchaseOrderController;
 use App\Http\Controllers\Admin\VehiclesController;
 use App\Http\Controllers\admin\dashboardController;
 use App\Http\Controllers\Admin\RequestedController;
+use App\Http\Controllers\MaintenanceController;
 use App\Http\Controllers\MissionController;
 
 /*
@@ -43,4 +44,5 @@ Route::prefix('admin')->middleware(['auth', 'isAdmin'])->group(function () {
     Route::resource('vehicles', VehiclesController::class);
 
     Route::resource('missions', MissionController::class);
+    Route::resource('maintenance',MaintenanceController::class);
 });
