@@ -10,7 +10,8 @@ class QuotationApiController extends Controller
 {
     public function index()
     {
-        $quotation = Quotation::all();
+        // $quotation = Quotation::all();
+        $quotation =  Quotation::with(['mission', 'quotationItems'])->get();
         return response()->json($quotation);
     }
 }
