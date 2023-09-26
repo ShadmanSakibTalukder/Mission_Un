@@ -15,8 +15,11 @@ return new class extends Migration
             $table->id();
             $table->string('part_no');
             $table->string('nomenclature');
+            $table->unsignedBigInteger('mission_id');
             $table->integer('qty')->default('1');
             $table->timestamps();
+
+            $table->foreign('mission_id')->references('id')->on('missions')->onDelete('cascade');
         });
     }
 

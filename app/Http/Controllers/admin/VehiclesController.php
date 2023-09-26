@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Vehicles;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Http;
 
 class VehiclesController extends Controller
@@ -19,8 +20,9 @@ class VehiclesController extends Controller
     }
     public function index()
     {
+        $mission = Auth::user()->mission_id;
         $parts = $this->fetchData();
-        $vehicles = Vehicles::all();
+        $vehicles = Vehicles::where('mission_id', $mission)->get();
         return view('admin.vehicles.index', compact('vehicles', 'parts'));
     }
 

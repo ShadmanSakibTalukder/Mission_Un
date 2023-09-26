@@ -13,6 +13,8 @@ class dashboardController extends Controller
     {
 
         $missions = Mission::where('status', 0)->get();
+
+
         if (Auth::user()->role_as == '1') {
             return view('admin.index');
         } elseif (Auth::user()->role_as == '2') {

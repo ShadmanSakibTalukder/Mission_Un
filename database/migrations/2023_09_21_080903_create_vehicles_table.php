@@ -14,9 +14,11 @@ return new class extends Migration
         Schema::create('vehicles', function (Blueprint $table) {
             $table->id();
             $table->string('vin_no');
+            $table->unsignedBigInteger('mission_id');
             $table->string('captain');
-            $table->date('vin_date');
             $table->timestamps();
+
+            $table->foreign('mission_id')->references('id')->on('missions')->onDelete('cascade');
         });
     }
 

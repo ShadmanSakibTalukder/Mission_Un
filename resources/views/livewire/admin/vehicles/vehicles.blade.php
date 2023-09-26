@@ -64,10 +64,6 @@
                         <label for="captain" class="form-label">Captain:</label>
                         <input type="text" class="form-control" id="captain" wire:model.defer="captain" required>
                     </div>
-                    <div class="mb-3">
-                        <label for="vin_date" class="form-label">Date</label>
-                        <input type="date" id="vin_date" name="vin_date" wire:model.defer="vin_date" class="form-control" required>
-                    </div>
                     <div class="my-5 d-flex justify-content-end p-3">
                         <button type="button" wire:click="vehicleOrder()" wire:loading.attr="disabled" wire:target="vehicleOrder" class="btn btn-md btn-outline-primary px-3 mx-2">
                             <span wire:loading.remove wire:target="vehicleOrder">Save</span>

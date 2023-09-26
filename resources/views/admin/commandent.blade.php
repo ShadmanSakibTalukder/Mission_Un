@@ -83,7 +83,15 @@
                                                 </tr>
                                             </thead>
                                             <tbody>
+                                                @forelse ($item->vehicles as $vitem)
+                                                <tr>
+                                                    <td>{{$loop->iteration}}</td>
+                                                    <td>{{$vitem->vin_no}}</td>
+                                                    <td>{{$vitem->captain}}</td>
+                                                </tr>
+                                                @empty
 
+                                                @endforelse
                                             </tbody>
                                         </table>
                                     </div>
