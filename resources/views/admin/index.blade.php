@@ -93,10 +93,11 @@
     <table class="table table-bordered align-middle">
         <thead>
             <tr>
-                <th scope="col">No.</th>
-                <th scope="col">Tender No.</th>
+                <th scope="col">No</th>
+                <th scope="col">Mission No</th>
+                <th scope="col">Requisition No</th>
+                <th scope="col">Requested By</th>
                 <th scope="col">Date</th>
-                <th scope="col">Ordered By</th>
                 <th scope="col">Status</th>
                 <th scope="col">Action</th>
             </tr>
