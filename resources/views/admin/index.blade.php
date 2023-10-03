@@ -54,19 +54,19 @@
             <div class="col-md-4">
                 <div class="card">
                     <div class="card-header text-center">Total Requisition</div>
-                    <div class="card-body text-center fs-2"><strong>1</strong></div>
+                    <div class="card-body text-center fs-2"><strong>{{$countMissionQuotation}}</strong></div>
                 </div>
             </div>
             <div class="col-md-4">
                 <div class="card">
                     <div class="card-header text-center">Requisition Completed</div>
-                    <div class="card-body text-center fs-2"><strong>1</strong></div>
+                    <div class="card-body text-center fs-2"><strong>{{$countMissionCompletedQuotation}}</strong></div>
                 </div>
             </div>
             <div class="col-md-4">
                 <div class="card">
                     <div class="card-header text-center">Requisition Under Process</div>
-                    <div class="card-body text-center fs-2"><strong>1</strong></div>
+                    <div class="card-body text-center fs-2"><strong>{{$countMissionProcessingQuotation}}</strong></div>
                 </div>
             </div>
         </div>
@@ -87,53 +87,55 @@
 
     </div>
     <br><br>
-    <h2>Requisition Pending</h2>
+    <h2>Assigned Vehicles</h2>
     <div class="line"></div>
     <br>
     <table class="table table-bordered align-middle">
         <thead>
             <tr>
                 <th scope="col">No</th>
-                <th scope="col">Mission No</th>
-                <th scope="col">Requisition No</th>
-                <th scope="col">Requested By</th>
-                <th scope="col">Date</th>
-                <th scope="col">Status</th>
-                <th scope="col">Action</th>
+                <th scope="col">VIIN No</th>
+                <th scope="col">Captain</th>
             </tr>
         </thead>
         <tbody>
-            {{-- @forelse ($tender as $item)
-            @if ($item->status=='0')
+            @forelse ($missionVehicles as $item)
             <tr>
                 <td>{{ $loop->iteration }}</td>
-                <td>{{ $item->tender_no }}</td>
-                <td>{{ $item->issue_date }}</td>
-                <td>{{ $item->orderd_by }}</td>
-                <td>@if($item->status==0)
-                    <a href="{{route('tenders.active',$item->id)}}" class="btn btn-sm link-success">{{__('Working')}}</a>
-                    @else
-                    <a href="{{route('tenders.inactive',$item->id)}}" class="btn btn-sm link-danger">{{__('Done')}}</a>
-
-                    @endif
-                </td>
-                <td>
-                    <a href="{{ route('tenders.show', $item->id) }}" class="btn btn-sm link-info"><i class="fa-solid fa-eye fs-5"></i></a>
-                    <form action="{{ route('tenders.destroy', $item->id) }}" method="POST" style="display:inline">
-                        @csrf
-                        @method('delete')
-                        <button class="btn btn-sm link-danger" onclick="return confirm('Are you sure you want to delete?')"><i class="fa-solid fa-trash fs-5"></i></button>
-                    </form>
-                </td>
+                <td>{{$item->vin_no}}</td>
+                <td>{{$item->captain}}</td>
             </tr>
-            @else
-            <td colspan="7">All Requisitions Done</td>
-            @endif
             @empty
             <tr>
                 <td colspan="7"><Strong>No Requisitions Available</Strong></td>
             </tr>
-            @endforelse --}}
+            @endforelse
+        </tbody>
+    </table>
+    <br><br>
+    <h2>Requsition Under Process</h2>
+    <div class="line"></div>
+    <br>
+    <table class="table table-bordered align-middle">
+        <thead>
+            <tr>
+                <th scope="col">No</th>
+                <th scope="col">Order No</th>
+                <th scope="col">Order Date</th>
+            </tr>
+        </thead>
+        <tbody>
+            @forelse ($missionQuotation as $item)
+            <tr>
+                <td>{{ $loop->iteration }}</td>
+                <td>{{$item->requested_order_no}}</td>
+                <td>{{$item->requested_date}}</td>
+            </tr>
+            @empty
+            <tr>
+                <td colspan="7"><Strong>No Requisitions Available</Strong></td>
+            </tr>
+            @endforelse
         </tbody>
     </table>
 

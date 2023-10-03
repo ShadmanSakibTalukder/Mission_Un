@@ -16,6 +16,7 @@ return new class extends Migration
             $table->string('requested_order_no');
             $table->unsignedBigInteger('mission_id');
             $table->date('requested_date');
+            $table->tinyInteger('status')->default('0')->comment('1=return,0=on_going');
             $table->timestamps();
 
             $table->foreign('mission_id')->references('id')->on('missions')->onDelete('cascade');
