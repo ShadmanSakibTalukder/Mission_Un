@@ -18,7 +18,7 @@ class Vehicles extends Component
     public $added_to_list = [];
     public function fetchData()
     {
-        $response = Http::get('http://127.0.0.1:8000/api/mens_part_list');
+        $response = Http::get('http://127.0.0.1:8000/api/mission_part_list');
         $parts = $response['data'];
         return $parts;
         // $data = $response->json();
